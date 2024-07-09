@@ -31,3 +31,9 @@ C:\Users\Asus\source\repos\ConsoleApp1\WebAPI\obj\Debug\net8.0\refint\WebAPI.dll
 C:\Users\Asus\source\repos\ConsoleApp1\WebAPI\obj\Debug\net8.0\WebAPI.pdb
 C:\Users\Asus\source\repos\ConsoleApp1\WebAPI\obj\Debug\net8.0\WebAPI.genruntimeconfig.cache
 C:\Users\Asus\source\repos\ConsoleApp1\WebAPI\obj\Debug\net8.0\ref\WebAPI.dll
+C:\Users\Asus\source\repos\ConsoleApp1\WebAPI\bin\Debug\net8.0\DataAccess.dll
+C:\Users\Asus\source\repos\ConsoleApp1\WebAPI\bin\Debug\net8.0\Entities.dll
+C:\Users\Asus\source\repos\ConsoleApp1\WebAPI\bin\Debug\net8.0\DataAccess.pdb
+C:\Users\Asus\source\repos\ConsoleApp1\WebAPI\bin\Debug\net8.0\Entities.pdb
+C:\Users\Asus\source\repos\ConsoleApp1\WebAPI\bin\Debug\net8.0\Business.dll
+C:\Users\Asus\source\repos\ConsoleApp1\WebAPI\bin\Debug\net8.0\Business.pdb
