@@ -4,8 +4,11 @@
 // http sunucusu ayaða kaldýrýr.
 using Business.Abstract;
 using Business.Concrete;
+using Business.Validation;
 using DataAccess.Absract;
 using DataAccess.Concrete;
+using FluentValidation;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,9 +20,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Service Lifetime
-builder.Services.AddSingleton<IProductRepository, InMemoryProductRepository>();
-builder.Services.AddSingleton<IProductService, ProductManager>();
+builder.Services.AddScoped<IProductRepository, InMemoryProductRepository>();
+builder.Services.AddScoped<IProductService, ProductManager>();
 
+// TODO: Business'dan extension ile çaðýrmak
+builder.Services.AddValidatorsFromAssemblyContaining<AddProductRequestValidator>();
 
 var app = builder.Build();
 

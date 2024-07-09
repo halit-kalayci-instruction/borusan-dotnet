@@ -4,6 +4,8 @@ using Business.DTO.Request;
 using Business.DTO.Response;
 using DataAccess.Absract;
 using Entities;
+using FluentValidation;
+using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +17,12 @@ namespace Business.Concrete
     public class ProductManager : IProductService
     {
         private readonly IProductRepository _productRepository;
+        private readonly IValidator<AddProductRequest> _validator;
 
-        public ProductManager(IProductRepository productRepository)
+        public ProductManager(IProductRepository productRepository, IValidator<AddProductRequest> validator)
         {
             _productRepository = productRepository;
+            _validator = validator;
         }
 
         public AddProductResponse Add(AddProductRequest addProductRequest)
@@ -29,13 +33,17 @@ namespace Business.Concrete
             // Eğer bu kurallar sağlanıyor ise veritabanına ekle
             // sağlanmıyor ise Exception fırlat.
 
+            //if (addProductRequest.UnitPrice < 0)
+            //    throw new Exception("Fiyat 0'dan küçük olamaz");
+
+            //if (addProductRequest.UnitsInStock < 0)
+            //    throw new Exception("Stok değeri 0'dan küçük olamaz.");
+
             // FluentValidation
-            if (addProductRequest.UnitPrice < 0)
-                throw new Exception("Fiyat 0'dan küçük olamaz");
+            ValidationResult validationResult = _validator.Validate(addProductRequest);
 
-            if (addProductRequest.UnitsInStock < 0)
-                throw new Exception("Stok değeri 0'dan küçük olamaz.");
-
+            if (!validationResult.IsValid)
+                throw new Exception("Validasyon hatası");
             // Manual Mapping
 
             // DTO => Entity ✔️✔️
