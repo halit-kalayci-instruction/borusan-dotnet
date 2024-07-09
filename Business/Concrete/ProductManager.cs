@@ -37,7 +37,7 @@ namespace Business.Concrete
             // Manual Mapping
 
             // DTO => Entity ✔️✔️
-            // Entity => DTO
+            // Entity => DTO 
 
             Product product = new Product()
             {
@@ -51,9 +51,37 @@ namespace Business.Concrete
             _productRepository.Add(product);
         }
 
-        public List<Product> GetAll()
+        // GetAll isteğinde kullanıcıya sadece
+        // id,name,description,unitPrice gösterilsin.
+        public List<ProductForListingDto> GetAll()
         {
-            return _productRepository.GetAll();
+            List<Product> products = _productRepository.GetAll();
+
+            // ENTITY => DTO
+            //List<ProductForListingDto> dtoList = new();
+            //foreach (Product product in products)
+            //{
+            //    ProductForListingDto productForListingDto = new()
+            //    {
+            //        Id = product.Id,
+            //        Description = product.Description,
+            //        Name = product.Name,
+            //        UnitPrice = product.UnitPrice,
+            //    };
+            //    dtoList.Add(productForListingDto);
+            //}
+
+            List<ProductForListingDto> dtoList = products
+            .Select(i=> new ProductForListingDto()
+            {
+                Id= i.Id,
+                Name= i.Name,
+                UnitPrice= i.UnitPrice,
+                Description= i.Description
+            })
+            .ToList();
+
+            return dtoList;
         }
     }
 }

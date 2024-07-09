@@ -11,6 +11,6 @@ namespace Business.Abstract
     public interface IProductService
     {
         void Add(ProductForAddDto productForAddDto);
-        List<Product> GetAll();
+        List<ProductForListingDto> GetAll();
     }
 }

@@ -25,7 +25,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public List<Product> GetAll()
+        public List<ProductForListingDto> GetAll()
         {
            return _productService.GetAll();
         }
