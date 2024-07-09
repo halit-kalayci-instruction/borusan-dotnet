@@ -39,6 +39,7 @@ namespace Business.Exceptions
                     details.Errors = e.Errors.Select(i => i.ErrorMessage).ToList();
 
                     await context.Response.WriteAsync(JsonSerializer.Serialize(details));
+                    return;
                 }
 
                 await context.Response.WriteAsync(exception.Message);
