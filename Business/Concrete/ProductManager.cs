@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.DTO;
+using Business.DTO.Request;
+using Business.DTO.Response;
 using DataAccess.Absract;
 using Entities;
 using System;
@@ -19,7 +21,7 @@ namespace Business.Concrete
             _productRepository = productRepository;
         }
 
-        public void Add(ProductForAddDto productForAddDto)
+        public AddProductResponse Add(AddProductRequest addProductRequest)
         {
             // UnitPrice 0'dan küçük olamaz
             // Stok 0'dan küçük olamaz
@@ -28,10 +30,10 @@ namespace Business.Concrete
             // sağlanmıyor ise Exception fırlat.
 
             // FluentValidation
-            if (productForAddDto.UnitPrice < 0)
+            if (addProductRequest.UnitPrice < 0)
                 throw new Exception("Fiyat 0'dan küçük olamaz");
 
-            if (productForAddDto.UnitsInStock < 0)
+            if (addProductRequest.UnitsInStock < 0)
                 throw new Exception("Stok değeri 0'dan küçük olamaz.");
 
             // Manual Mapping
@@ -41,14 +43,24 @@ namespace Business.Concrete
 
             Product product = new Product()
             {
-                Description = productForAddDto.Description,
-                Name = productForAddDto.Name,
-                UnitPrice = productForAddDto.UnitPrice,
-                UnitsInStock = productForAddDto.UnitsInStock,
+                Description = addProductRequest.Description,
+                Name = addProductRequest.Name,
+                UnitPrice = addProductRequest.UnitPrice,
+                UnitsInStock = addProductRequest.UnitsInStock,
                 Id = new Random().Next(1, 9999),
             };
 
             _productRepository.Add(product);
+
+            return new AddProductResponse()
+            {
+                Id=product.Id,
+                CategoryId=addProductRequest.CategoryId,
+                Description = product.Description,
+                Name= product.Name,
+                UnitPrice= product.UnitPrice,
+                UnitsInStock= product.UnitsInStock,
+            };
         }
 
         // GetAll isteğinde kullanıcıya sadece
@@ -56,7 +68,6 @@ namespace Business.Concrete
         public List<ProductForListingDto> GetAll()
         {
             List<Product> products = _productRepository.GetAll();
-
             // ENTITY => DTO
             //List<ProductForListingDto> dtoList = new();
             //foreach (Product product in products)
@@ -70,7 +81,6 @@ namespace Business.Concrete
             //    };
             //    dtoList.Add(productForListingDto);
             //}
-
             List<ProductForListingDto> dtoList = products
             .Select(i=> new ProductForListingDto()
             {

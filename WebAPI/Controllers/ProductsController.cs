@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.DTO;
+using Business.DTO.Request;
+using Business.DTO.Response;
 using Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +20,9 @@ namespace WebAPI.Controllers
 
         // Controller service implementasyonu yapar.
         // Controller asla dışarıya Entity açmaz, dışardan da entity istemez.
+
+        // Bir istekte kullanılan request veya response nesnesi
+        // başka bir istekte yer alamaz.
         private readonly IProductService _productService;
         public ProductsController(IProductService productService)
         {
@@ -31,9 +36,10 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public void Add([FromBody] ProductForAddDto productForAddDto)
+        public ActionResult<AddProductResponse> Add([FromBody] AddProductRequest addProductRequest)
         {
-            _productService.Add(productForAddDto);
+            return Created("", _productService.Add(addProductRequest));
+            //return  _productService.Add(addProductRequest);
         }
     }
 }

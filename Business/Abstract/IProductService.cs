@@ -1,4 +1,6 @@
 ﻿using Business.DTO;
+using Business.DTO.Request;
+using Business.DTO.Response;
 using Entities;
 using System;
 using System.Collections.Generic;
@@ -10,7 +12,7 @@ namespace Business.Abstract
 {
     public interface IProductService
     {
-        void Add(ProductForAddDto productForAddDto);
+        AddProductResponse Add(AddProductRequest addProductRequest);
         List<ProductForListingDto> GetAll();
     }
 }
