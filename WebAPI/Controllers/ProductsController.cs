@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.DTO;
 using Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,7 @@ namespace WebAPI.Controllers
         // Hiç bir web api veri erişim katmanı referansı almaz.
 
         // Controller service implementasyonu yapar.
+        // Controller asla dışarıya Entity açmaz, dışardan da entity istemez.
         private readonly IProductService _productService;
         public ProductsController(IProductService productService)
         {
@@ -25,14 +27,13 @@ namespace WebAPI.Controllers
         [HttpGet]
         public List<Product> GetAll()
         {
-            return null;
-           // return _productRepository.GetAll();
+           return _productService.GetAll();
         }
 
         [HttpPost]
-        public void Add([FromBody] Product product)
+        public void Add([FromBody] ProductForAddDto productForAddDto)
         {
-            _productService.Add(product);
+            _productService.Add(productForAddDto);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using Business.DTO;
+using Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace Business.Abstract
 {
     public interface IProductService
     {
-        void Add(Product product);
+        void Add(ProductForAddDto productForAddDto);
+        List<Product> GetAll();
     }
 }

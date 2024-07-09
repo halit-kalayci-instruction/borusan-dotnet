@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.DTO;
 using DataAccess.Absract;
 using Entities;
 using System;
@@ -18,22 +19,41 @@ namespace Business.Concrete
             _productRepository = productRepository;
         }
 
-        public void Add(Product product)
+        public void Add(ProductForAddDto productForAddDto)
         {
             // UnitPrice 0'dan küçük olamaz
-            // Stok 0'dan küçok olamaz
+            // Stok 0'dan küçük olamaz
 
             // Eğer bu kurallar sağlanıyor ise veritabanına ekle
             // sağlanmıyor ise Exception fırlat.
 
             // FluentValidation
-            if (product.UnitPrice < 0)
+            if (productForAddDto.UnitPrice < 0)
                 throw new Exception("Fiyat 0'dan küçük olamaz");
 
-            if (product.UnitsInStock < 0)
+            if (productForAddDto.UnitsInStock < 0)
                 throw new Exception("Stok değeri 0'dan küçük olamaz.");
 
+            // Manual Mapping
+
+            // DTO => Entity ✔️✔️
+            // Entity => DTO
+
+            Product product = new Product()
+            {
+                Description = productForAddDto.Description,
+                Name = productForAddDto.Name,
+                UnitPrice = productForAddDto.UnitPrice,
+                UnitsInStock = productForAddDto.UnitsInStock,
+                Id = new Random().Next(1, 9999),
+            };
+
             _productRepository.Add(product);
+        }
+
+        public List<Product> GetAll()
+        {
+            return _productRepository.GetAll();
         }
     }
 }
