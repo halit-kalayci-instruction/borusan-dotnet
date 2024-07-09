@@ -4,6 +4,7 @@
 // http sunucusu ayaða kaldýrýr.
 using Business.Abstract;
 using Business.Concrete;
+using Business.Exceptions;
 using Business.Validation;
 using DataAccess.Absract;
 using DataAccess.Concrete;
@@ -34,6 +35,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 

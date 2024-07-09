@@ -42,8 +42,22 @@ namespace Business.Concrete
             // FluentValidation
             ValidationResult validationResult = _validator.Validate(addProductRequest);
 
+
+
+            //if (!validationResult.IsValid)
+            //{
+            //    string x = "";
+            //    foreach (var item in validationResult.Errors)
+            //    {
+            //        x += item.ErrorMessage + " ";
+            //    }
+            //    throw new Exception(x);
+            //}
+
+
             if (!validationResult.IsValid)
-                throw new Exception("Validasyon hatası");
+                throw new ValidationException(validationResult.Errors);
+
             // Manual Mapping
 
             // DTO => Entity ✔️✔️
